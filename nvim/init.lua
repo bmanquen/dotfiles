@@ -557,7 +557,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         ruby_lsp = {},
@@ -567,7 +567,7 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {},
+        ts_ls = {},
         astro = {},
         emmet_language_server = {},
         html = {},
@@ -628,14 +628,14 @@ require('lazy').setup({
 
       -- ruby-lsp configuration
       local mason_lspconfig = require 'mason-lspconfig'
-      mason_lspconfig.setup_handlers {
+      mason_lspconfig.setup {
         function(server_name)
           require('lspconfig')[server_name].setup {
             auto_install = true,
             capabilities = capabilities,
             ensure_installed = {
               'astro',
-              'tsserver',
+              'ts_ls',
               'html',
               'cssls',
               'tailwindcss',
@@ -713,6 +713,8 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
+        go = { 'goimports', 'gofmt' },
+        templ = { 'templ' },
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
@@ -721,7 +723,7 @@ require('lazy').setup({
         -- is found.
         ruby = { 'rubocop' },
         eruby = { 'erb_format' },
-        javascript = { { 'prettierd', 'prettier' } },
+        javascript = { 'prettier' },
         astro = { 'prettier' },
         typescript = { 'prettier' },
         typescriptreact = { 'prettier' },
@@ -730,6 +732,7 @@ require('lazy').setup({
         css = { 'prettier' },
       },
       formatters = {
+        gofmt = {},
         prettier = {
           args = function(self, ctx)
             if vim.endswith(ctx.filename, '.astro') then
@@ -857,15 +860,21 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    -- 'folke/tokyonight.nvim',
-    'ellisonleao/gruvbox.nvim',
+    --'folke/tokyonight.nvim',
+    --'ellisonleao/gruvbox.nvim',
+    'neanias/everforest-nvim',
     -- 'rose-pine/neovim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
+    version = false,
+    lazy = false,
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'everforest'
+      require('everforest').setup {
+        background = 'hard',
+      }
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'

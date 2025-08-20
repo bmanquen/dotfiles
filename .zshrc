@@ -6,8 +6,6 @@ export PATH="$PATH:/Users/bmanquen/workspace/worldbanc/private/bin"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-export PATH=$PATH:$HOME/go/bin
-export PATH=$PATH:$HOME/go/bin
 
 #Git Aliases
 alias gs="git status"
